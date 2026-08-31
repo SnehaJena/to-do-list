@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My To-Do List</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <h1>My To-Do List</h1>
+
+
+        <!-- Add Task -->
+
+        <form method="POST" class="task-form">
+
+            <input
+                type="text"
+                name="task"
+                placeholder="What do you need to do?"
+                required
+            >
+
+            <button
+                type="submit"
+                class="add-btn"
+            >
+                Add Task
+            </button>
+
+        </form>
+
+
+        <!-- Task List -->
+
+        <ul class="task-list">
+
+            {% for task in tasks %}
+
+            <li class="task-item">
+
+                <span
+                    class="task-text {% if task.completed %}completed{% endif %}"
+                >
+                    {{ task.task }}
+                </span>
+
+
+                <div class="actions">
+
+                    <!-- Complete / Undo -->
+
+                    <form
+                        method="POST"
+                        action="/complete/{{ task.id }}"
+                    >
+
+                        <button
+                            type="submit"
+                            class="complete-btn"
+                        >
+
+                            {% if task.completed %}
+                                Undo
+                            {% else %}
+                                Complete
+                            {% endif %}
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- Delete -->
+
+                    <form
+                        method="POST"
+                        action="/delete/{{ task.id }}"
+                    >
+
+                        <button
+                            type="submit"
+                            class="delete-btn"
+                        >
+                            Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </li>
+
+            {% else %}
+
+            <p class="empty-message">
+                No tasks yet. Add your first task!
+            </p>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+</body>
+
+</html>
