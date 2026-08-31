@@ -27,14 +27,33 @@
         <header class="header">
 
             <div>
-                <p class="welcome">WELCOME BACK 👋</p>
 
-                <h1>My Tasks</h1>
+                <p class="welcome">
+                    WELCOME BACK 👋
+                </p>
+
+                <h1>
+                    My Tasks
+                </h1>
 
                 <p class="subtitle">
                     Stay organized. Stay focused.
                 </p>
+
             </div>
+
+
+            <!-- Theme Toggle -->
+
+            <button
+                id="theme-toggle"
+                class="theme-toggle"
+                type="button"
+                aria-label="Toggle dark mode"
+                title="Toggle theme"
+            >
+                🌙
+            </button>
 
         </header>
 
@@ -43,7 +62,10 @@
 
         <section class="add-task-card">
 
-            <form method="POST" class="task-form">
+            <form
+                method="POST"
+                class="task-form"
+            >
 
                 <input
                     type="text"
@@ -69,6 +91,8 @@
 
         <section class="summary">
 
+            <!-- Total Tasks -->
+
             <div class="summary-card">
 
                 <span class="summary-number">
@@ -82,6 +106,8 @@
             </div>
 
 
+            <!-- Active Tasks -->
+
             <div class="summary-card">
 
                 <span class="summary-number">
@@ -94,6 +120,8 @@
 
             </div>
 
+
+            <!-- Completed Tasks -->
 
             <div class="summary-card">
 
@@ -116,7 +144,9 @@
 
             <div class="section-header">
 
-                <h2>Your Tasks</h2>
+                <h2>
+                    Your Tasks
+                </h2>
 
             </div>
 
@@ -125,24 +155,36 @@
 
                 {% for task in tasks %}
 
+                <!-- Individual Task -->
+
                 <div class="task-card">
 
                     <div class="task-content">
 
+                        <!-- Task Status -->
+
                         <div class="task-check">
 
                             {% if task.completed %}
+
                                 ✓
+
                             {% else %}
+
                                 ○
+
                             {% endif %}
 
                         </div>
 
 
+                        <!-- Task Information -->
+
                         <div>
 
-                            <p class="task-title {% if task.completed %}completed{% endif %}">
+                            <p
+                                class="task-title {% if task.completed %}completed{% endif %}"
+                            >
                                 {{ task.task }}
                             </p>
 
@@ -155,9 +197,11 @@
                     </div>
 
 
+                    <!-- Task Actions -->
+
                     <div class="task-actions">
 
-                        <!-- Complete -->
+                        <!-- Complete / Undo -->
 
                         <form
                             method="POST"
@@ -167,13 +211,18 @@
                             <button
                                 type="submit"
                                 class="action-btn complete-btn"
-                                title="Complete task"
+                                title="{% if task.completed %}Undo completion{% else %}Complete task{% endif %}"
+                                aria-label="{% if task.completed %}Undo completion{% else %}Complete task{% endif %}"
                             >
 
                                 {% if task.completed %}
+
                                     ↩
+
                                 {% else %}
+
                                     ✓
+
                                 {% endif %}
 
                             </button>
@@ -192,6 +241,7 @@
                                 type="submit"
                                 class="action-btn delete-btn"
                                 title="Delete task"
+                                aria-label="Delete task"
                             >
                                 🗑
                             </button>
@@ -202,7 +252,10 @@
 
                 </div>
 
+
                 {% else %}
+
+                <!-- Empty State -->
 
                 <div class="empty-state">
 
@@ -210,7 +263,9 @@
                         ✓
                     </div>
 
-                    <h3>No tasks yet</h3>
+                    <h3>
+                        No tasks yet
+                    </h3>
 
                     <p>
                         Add your first task and get started!
@@ -225,6 +280,92 @@
         </section>
 
     </main>
+
+
+    <!-- Theme Toggle Script -->
+
+    <script>
+
+        const themeToggle =
+            document.getElementById("theme-toggle");
+
+
+        // Get the user's saved theme
+
+        const savedTheme =
+            localStorage.getItem("theme");
+
+
+        // Apply saved dark theme
+
+        if (savedTheme === "dark") {
+
+            document.body.classList.add("dark-mode");
+
+            themeToggle.textContent = "☀️";
+
+        }
+
+
+        // Toggle between light and dark mode
+
+        themeToggle.addEventListener("click", function () {
+
+            document.body.classList.toggle("dark-mode");
+
+
+            const isDarkMode =
+                document.body.classList.contains("dark-mode");
+
+
+            if (isDarkMode) {
+
+                // Dark mode
+
+                themeToggle.textContent = "☀️";
+
+                themeToggle.setAttribute(
+                    "aria-label",
+                    "Switch to light mode"
+                );
+
+                themeToggle.setAttribute(
+                    "title",
+                    "Switch to light mode"
+                );
+
+                localStorage.setItem(
+                    "theme",
+                    "dark"
+                );
+
+            } else {
+
+                // Light mode
+
+                themeToggle.textContent = "🌙";
+
+                themeToggle.setAttribute(
+                    "aria-label",
+                    "Switch to dark mode"
+                );
+
+                themeToggle.setAttribute(
+                    "title",
+                    "Switch to dark mode"
+                );
+
+                localStorage.setItem(
+                    "theme",
+                    "light"
+                );
+
+            }
+
+        });
+
+    </script>
+
 
 </body>
 
