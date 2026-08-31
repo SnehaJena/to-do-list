@@ -20,103 +20,211 @@
 
 <body>
 
-    <div class="container">
+    <main class="container">
 
-        <h1>My To-Do List</h1>
+        <!-- Header -->
+
+        <header class="header">
+
+            <div>
+                <p class="welcome">WELCOME BACK 👋</p>
+
+                <h1>My Tasks</h1>
+
+                <p class="subtitle">
+                    Stay organized. Stay focused.
+                </p>
+            </div>
+
+        </header>
 
 
         <!-- Add Task -->
 
-        <form method="POST" class="task-form">
+        <section class="add-task-card">
 
-            <input
-                type="text"
-                name="task"
-                placeholder="What do you need to do?"
-                required
-            >
+            <form method="POST" class="task-form">
 
-            <button
-                type="submit"
-                class="add-btn"
-            >
-                Add Task
-            </button>
+                <input
+                    type="text"
+                    name="task"
+                    placeholder="What needs to be done?"
+                    autocomplete="off"
+                    required
+                >
 
-        </form>
+                <button
+                    type="submit"
+                    class="add-btn"
+                >
+                    + Add Task
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- Task Summary -->
+
+        <section class="summary">
+
+            <div class="summary-card">
+
+                <span class="summary-number">
+                    {{ tasks|length }}
+                </span>
+
+                <span class="summary-label">
+                    Total Tasks
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-number">
+                    {{ tasks|selectattr('completed', 'equalto', false)|list|length }}
+                </span>
+
+                <span class="summary-label">
+                    Active
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-number">
+                    {{ tasks|selectattr('completed', 'equalto', true)|list|length }}
+                </span>
+
+                <span class="summary-label">
+                    Completed
+                </span>
+
+            </div>
+
+        </section>
 
 
         <!-- Task List -->
 
-        <ul class="task-list">
+        <section class="tasks-section">
 
-            {% for task in tasks %}
+            <div class="section-header">
 
-            <li class="task-item">
+                <h2>Your Tasks</h2>
 
-                <span
-                    class="task-text {% if task.completed %}completed{% endif %}"
-                >
-                    {{ task.task }}
-                </span>
+            </div>
 
 
-                <div class="actions">
+            <div class="task-list">
 
-                    <!-- Complete / Undo -->
+                {% for task in tasks %}
 
-                    <form
-                        method="POST"
-                        action="/complete/{{ task.id }}"
-                    >
+                <div class="task-card">
 
-                        <button
-                            type="submit"
-                            class="complete-btn"
-                        >
+                    <div class="task-content">
+
+                        <div class="task-check">
 
                             {% if task.completed %}
-                                Undo
+                                ✓
                             {% else %}
-                                Complete
+                                ○
                             {% endif %}
 
-                        </button>
-
-                    </form>
+                        </div>
 
 
-                    <!-- Delete -->
+                        <div>
 
-                    <form
-                        method="POST"
-                        action="/delete/{{ task.id }}"
-                    >
+                            <p class="task-title {% if task.completed %}completed{% endif %}">
+                                {{ task.task }}
+                            </p>
 
-                        <button
-                            type="submit"
-                            class="delete-btn"
+                            <p class="task-date">
+                                {{ task.created_at[:10] }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="task-actions">
+
+                        <!-- Complete -->
+
+                        <form
+                            method="POST"
+                            action="/complete/{{ task.id }}"
                         >
-                            Delete
-                        </button>
 
-                    </form>
+                            <button
+                                type="submit"
+                                class="action-btn complete-btn"
+                                title="Complete task"
+                            >
+
+                                {% if task.completed %}
+                                    ↩
+                                {% else %}
+                                    ✓
+                                {% endif %}
+
+                            </button>
+
+                        </form>
+
+
+                        <!-- Delete -->
+
+                        <form
+                            method="POST"
+                            action="/delete/{{ task.id }}"
+                        >
+
+                            <button
+                                type="submit"
+                                class="action-btn delete-btn"
+                                title="Delete task"
+                            >
+                                🗑
+                            </button>
+
+                        </form>
+
+                    </div>
 
                 </div>
 
-            </li>
+                {% else %}
 
-            {% else %}
+                <div class="empty-state">
 
-            <p class="empty-message">
-                No tasks yet. Add your first task!
-            </p>
+                    <div class="empty-icon">
+                        ✓
+                    </div>
 
-            {% endfor %}
+                    <h3>No tasks yet</h3>
 
-        </ul>
+                    <p>
+                        Add your first task and get started!
+                    </p>
 
-    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    </main>
 
 </body>
 
