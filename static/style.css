@@ -4,6 +4,10 @@
 
 :root {
     --background: #eef2ff;
+    --page-background:
+        radial-gradient(circle at 12% 18%, rgba(211, 98, 147, 0.8), transparent 32%),
+        radial-gradient(circle at 88% 82%, rgba(73, 156, 216, 0.8), transparent 34%),
+        linear-gradient(135deg, #fff1f7 0%, #e6f5ff 100%);
     --card: #ffffff;
     --text: #1f2937;
     --secondary-text: #6b7280;
@@ -30,6 +34,13 @@
 
 body.dark-mode {
     --background: #111827;
+    --page-background:
+        radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.9) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 74% 16%, rgba(255, 255, 255, 0.75) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 42% 68%, rgba(255, 255, 255, 0.8) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 88% 76%, rgba(255, 255, 255, 0.7) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 55% 38%, rgba(147, 197, 253, 0.18), transparent 34%),
+        linear-gradient(145deg, #080d24 0%, #111936 55%, #172554 100%);
     --card: #1f2937;
     --text: #f9fafb;
     --secondary-text: #9ca3af;
@@ -67,7 +78,8 @@ html {
 body {
     font-family: Arial, sans-serif;
 
-    background: var(--background);
+    background: var(--page-background);
+    background-attachment: fixed;
     color: var(--text);
 
     min-height: 100vh;
@@ -544,6 +556,23 @@ body {
 
 
 /* =========================================
+   Desktop Spacing
+========================================= */
+
+@media (min-width: 601px) {
+
+    .container {
+        padding: 20px 0;
+    }
+
+    .task-card {
+        padding: 20px;
+    }
+
+}
+
+
+/* =========================================
    Mobile Responsive Design
 ========================================= */
 
@@ -621,10 +650,16 @@ body {
 
     .task-card {
         padding: 14px;
+
+        align-items: flex-start;
+
+        gap: 12px;
     }
 
     .task-content {
         gap: 10px;
+
+        flex: 1;
     }
 
     .task-check {
@@ -636,14 +671,14 @@ body {
     }
 
     .task-actions {
-        margin-left: 8px;
+        margin-left: 0;
 
         gap: 5px;
     }
 
     .action-btn {
-        width: 32px;
-        height: 32px;
+        width: 40px;
+        height: 40px;
 
         font-size: 14px;
     }
