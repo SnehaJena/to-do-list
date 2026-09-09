@@ -81,12 +81,75 @@ body {
     background: var(--page-background);
     background-attachment: fixed;
     color: var(--text);
+    position: relative;
 
     min-height: 100vh;
 
     transition:
         background 0.3s ease,
         color 0.3s ease;
+}
+
+body.dark-mode::before,
+body.dark-mode::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+body.dark-mode::before {
+    background: transparent;
+    box-shadow:
+        7vw 12vh 0 0 rgba(255, 255, 255, 0.75),
+        16vw 68vh 0 0 rgba(191, 219, 254, 0.8),
+        24vw 31vh 0 0 rgba(255, 255, 255, 0.65),
+        33vw 86vh 0 0 rgba(255, 255, 255, 0.8),
+        43vw 18vh 0 0 rgba(191, 219, 254, 0.72),
+        51vw 74vh 0 0 rgba(255, 255, 255, 0.7),
+        62vw 28vh 0 0 rgba(255, 255, 255, 0.8),
+        71vw 91vh 0 0 rgba(191, 219, 254, 0.72),
+        82vw 48vh 0 0 rgba(255, 255, 255, 0.75),
+        94vw 20vh 0 0 rgba(255, 255, 255, 0.65);
+    animation: star-twinkle 4.5s ease-in-out infinite alternate;
+}
+
+body.dark-mode::after {
+    background: transparent;
+    box-shadow:
+        12vw 42vh 0 1px rgba(255, 255, 255, 0.9),
+        29vw 9vh 0 1px rgba(219, 234, 254, 0.85),
+        39vw 55vh 0 1px rgba(255, 255, 255, 0.82),
+        57vw 43vh 0 1px rgba(219, 234, 254, 0.9),
+        68vw 11vh 0 1px rgba(255, 255, 255, 0.85),
+        78vw 73vh 0 1px rgba(219, 234, 254, 0.8),
+        89vw 61vh 0 1px rgba(255, 255, 255, 0.9);
+    animation: star-twinkle 3s ease-in-out 1.2s infinite alternate-reverse;
+}
+
+@keyframes star-twinkle {
+    0% {
+        opacity: 0.35;
+        transform: scale(0.98);
+    }
+
+    50% {
+        opacity: 0.75;
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+}
+
+.container {
+    position: relative;
+    z-index: 1;
 }
 
 
